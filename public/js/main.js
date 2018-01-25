@@ -5,6 +5,18 @@ var config = {
     projectId: "emytagbot",
   };
 firebase.initializeApp(config);
+
+$('#load_modal').modal({
+    dismissible: false, // Modal can be dismissed by clicking outside of the modal
+    opacity: .9, // Opacity of modal background
+    inDuration: 300, // Transition in duration
+    outDuration: 200, // Transition out duration
+    startingTop: '4%', // Starting top style attribute
+    endingTop: '10%', // Ending top style attribute
+  }
+);
+
+$('#load_modal').modal('open');
   
 // Initialize Cloud Firestore through Firebase
 var db = firebase.firestore();
@@ -24,18 +36,27 @@ function grabID()
 function set_title(name,username)
 {
     item = document.getElementById("pg_title")
-    item.innerHTML = "Welcome "+name
-    if(username != "") item.innerHTML+=" @" + username
+    item.innerHTML = "Hey "+name+"!";
 }
 
-function addElement(tag, use)
+
+function getElemHtml(pos, tag, use)
 {
-    var table = document.getElementById("hashtable");
-    var row = table.insertRow(1);
-    var cell1 = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-    cell1.innerHTML = tag;
-    cell2.innerHTML = use;
+
+    htm = `<div class="col s12 m6 l6 xl4">
+    <ul class="collapsible popout" data-collapsible="accordion">
+        <li><div class="collapsible-header">{tag}<span class="badge">{pos}</span></div><div class="collapsible-body">
+                <ul class="collection"><li class="collection-item">Use: {use}</li><li class="collection-item">Type: {type}</li>
+                    <li class="collection-item">Creation: {creation}</li><li class="collection-item">Expire: {last}</li></ul></div></li></ul></div>`;
+    htm = htm.replace("{tag}",tag);
+    htm = htm.replace("{pos}",pos.toString());
+    htm = htm.replace("{use}",use.toString());
+    htm = htm.replace("{type}","N.A.");
+    htm = htm.replace("{creation}","N.A.");
+    htm = htm.replace("{last}", "N.A.");
+    
+
+    return htm;
 }
 
 window.onload =  function()
@@ -61,14 +82,24 @@ window.onload =  function()
                 set_title(data["name"], data["username"]);
 
                 //ordine decrescente
-                data["tags"].sort(function (a,b){ return a["use"] - b["use"] } );
+                data["tags"].sort(function (a,b){ return b["use"] - a["use"] } );
+
+                container = document.getElementById("tags");
 
                 //crea gli elementi della tabella
                 for(i in data["tags"])
                 {
-                   addElement(data["tags"][i]["tag"], data["tags"][i]["use"]) 
+                   container.innerHTML += getElemHtml(parseInt(i)+1,data["tags"][i]["tag"], data["tags"][i]["use"]) 
                 }
                 
+                $('#load_modal').modal('close');
+
+                $('.collapsible').each(
+                    function(index)
+                    {
+                        $(this).collapsible();
+                    }
+                );
             }
             else
             {

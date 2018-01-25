@@ -1,19 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
-    <title>EmyTagBot</title>
-  </head>
-  <body>
-    <h1 id="pg_title">Loading...</h1>
-    <table id="hashtable" style="width:100%">
-      <tr>
-        <th>HASHTAG</th>
-        <th>USE COUNT</th> 
-      </tr>
-    </table>
+    <title>My Tags = EmyTagBot</title>
+    <link rel="stylesheet" href="materialize/css/materialize.min.css">
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo center" id="pg_title">Loading...</a>
+        </div>
+    </nav>
+
+    <div class="row" id="tags">
+
+    </div>
+
+
+    <!-- Modal Structure -->
+    <div id="load_modal" class="modal">
+        <div class="modal-content">
+            <h4>Nyaaaaaa</h4>
+            <p>Please don't leave, I'm loading your tags :3</p>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase-firestore.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>    
-  </body>
+    <script id = "reloadMe" src="materialize/js/materialize.min.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+
 </html>
