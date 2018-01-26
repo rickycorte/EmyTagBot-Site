@@ -40,7 +40,7 @@ function set_title(name,username)
 }
 
 
-function getElemHtml(pos, tag, use)
+function getElemHtml(pos, tag, use, creation, type, last)
 {
 
     htm = `<div class="col s12 m6 l6 xl4">
@@ -51,9 +51,9 @@ function getElemHtml(pos, tag, use)
     htm = htm.replace("{tag}",tag);
     htm = htm.replace("{pos}",pos.toString());
     htm = htm.replace("{use}",use.toString());
-    htm = htm.replace("{type}","N.A.");
-    htm = htm.replace("{creation}","N.A.");
-    htm = htm.replace("{last}", "N.A.");
+    htm = htm.replace("{type}",type);
+    htm = htm.replace("{creation}",creation);
+    htm = htm.replace("{last}", last);
     
 
     return htm;
@@ -66,7 +66,7 @@ window.onload =  function()
     if(id == null || isNaN(id) || id == undefined) 
     {
         console.log("its a trap :3")
-        //window.location.replace("index.html");
+        window.location.replace("index.html?error");
     }
     else
     {
@@ -89,7 +89,13 @@ window.onload =  function()
                 //crea gli elementi della tabella
                 for(i in data["tags"])
                 {
-                   container.innerHTML += getElemHtml(parseInt(i)+1,data["tags"][i]["tag"], data["tags"][i]["use"]) 
+                   container.innerHTML += getElemHtml(
+                        parseInt(i)+1,data["tags"][i]["tag"],
+                        data["tags"][i]["use"],
+                        data["tags"][i]["creation"],
+                        data["tags"][i]["type"],
+                        data["tags"][i]["expire"]
+                    ) 
                 }
                 
                 $('#load_modal').modal('close');
@@ -103,8 +109,7 @@ window.onload =  function()
             }
             else
             {
-                //window.location.replace("index.html");
-                // doc.data() will be undefined in this case
+                window.location.replace("index.html?error");
                 console.log("No such document!");
             }
         }).catch(function(error) {
