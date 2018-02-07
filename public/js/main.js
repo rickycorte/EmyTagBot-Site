@@ -90,9 +90,6 @@ function getElemHtml(pos, tag, use, creation, type, last)
     htm = htm.replace("{creation}",creation);
     htm = htm.replace("{last}", last);
 
-    
-    htm = htm.replace("{icon}","");
-
     return htm;
 }
 
