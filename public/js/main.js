@@ -33,17 +33,52 @@ function grabID()
 
 
 
-function set_title(name,username)
+function set_title()
 {
-    item = document.getElementById("pg_title")
-    item.innerHTML = "Hey "+name+"!";
+    var item = document.getElementById("pg_title")
+    item.innerHTML = "Nyaaaaa!";
+}
+
+function set_name(name)
+{
+
+    var item = document.getElementById("you");
+    item.innerHTML = name;
+
+}
+
+function set_stats(data)
+{
+    var item = document.getElementById("stats");
+    var i = 0;
+    var usages = 0;
+    for(i in data["tags"])
+    {
+        usages += data["tags"][i]["use"];
+    }
+    item.innerHTML = item.innerHTML.replace("{total_uses}",usages.toString());
+    item.innerHTML = item.innerHTML.replace("{tag_count}",(parseInt(i)).toString());
+}
+
+function set_top_tags(data)
+{
+    var item = document.getElementById("top_list");
+    var result = ""
+    for(i in data["tags"])
+    {
+        if(i > 2) break
+        //scrivi solo i primi 3 (perche la lista passata come parametro e' ordinata)
+
+        result += data["tags"][i]["tag"]+"<br>";
+    }
+    item.innerHTML = result
 }
 
 
 function getElemHtml(pos, tag, use, creation, type, last)
 {
 
-    htm = `<div class="col s12 m6 l6 xl4">
+    var htm = `<div class="col s12 m6 l6 xl4">
     <ul class="collapsible popout" data-collapsible="accordion">
         <li><div class="collapsible-header">{tag}<span class="badge">{pos}</span></div><div class="collapsible-body">
                 <ul class="collection"><li class="collection-item">Use: {use}</li><li class="collection-item">Type: {type}</li>
@@ -54,7 +89,9 @@ function getElemHtml(pos, tag, use, creation, type, last)
     htm = htm.replace("{type}",type);
     htm = htm.replace("{creation}",creation);
     htm = htm.replace("{last}", last);
+
     
+    htm = htm.replace("{icon}","");
 
     return htm;
 }
@@ -79,12 +116,12 @@ window.onload =  function()
                 var data = doc.data()
 
                 //importa titolo pagina
-                set_title(data["name"], data["username"]);
+                set_title();
 
                 //ordine decrescente
                 data["tags"].sort(function (a,b){ return b["use"] - a["use"] } );
 
-                container = document.getElementById("tags");
+                var container = document.getElementById("tags");
 
                 //crea gli elementi della tabella
                 for(i in data["tags"])
@@ -97,6 +134,10 @@ window.onload =  function()
                         data["tags"][i]["expire"]
                     ) 
                 }
+
+                set_name(data["name"]);
+                set_stats(data);
+                set_top_tags(data);
                 
                 $('#load_modal').modal('close');
 

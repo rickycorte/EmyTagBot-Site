@@ -4,23 +4,57 @@
 <head>
     <meta charset="utf-8">
     <title>My Tags - EmyTagBot</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="materialize/css/materialize.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
 <body>
 
-    <nav>
+    <nav class="nav-extended">
         <div class="nav-wrapper">
             <a href="#" class="brand-logo center no-ov" id="pg_title">Loading...</a>
+        </div>
+        <div class="nav-content">
+            <ul class="tabs tabs-transparent">
+                <li class="tab">
+                     <a class="active"href="#infos">You</a>
+                </li>
+                <li class="tab">
+                    <a  href="#tags">My Tags</a>
+                </li>
+            </ul>
         </div>
     </nav>
 
     <div class="row" id="tags">
-
     </div>
 
+    <div class="row" id="infos">
+        <div class="col s12">
+            <ul class="collection">
+                <li class="collection-item avatar">
+                    <i class="material-icons circle">person</i>
+                    <span class="title">You</span>
+                    <p id="you">{name}
+                    </p>
+                </li>
+                <li class="collection-item avatar">
+                    <i class="material-icons circle green">insert_chart</i>
+                    <span class="title">Stats</span>
+                    <p id="stats">Tags owned: {tag_count}
+                        <br>Tags use count: {total_uses}
+                    </p>
+                </li>
+                <li class="collection-item avatar">
+                    <i class="material-icons circle red">call_made</i>
+                    <span class="title">Best tags</span>
+                    <p id="top_list">{top_3_tags}</p>
+                </li>
+            </ul>
+        </div>
+    </div>
 
     <!-- Modal Structure -->
     <div id="load_modal" class="modal">
